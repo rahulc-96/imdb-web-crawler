@@ -88,13 +88,13 @@ Any item-pipleline in Scrapy is required to provide implementation for `process_
 
 - Currently PersusBetaSpider supports crawling details for Top 250 movies in IMDB. We initiate the crawl using `https://www.imdb.com/chart/top` as the start_url, that hosts a table containing the Top 250 movies as rated by IMDB users. We have also restricted the crawler's scope by giving only "imdb.com" as part of the allowed_domains attribute.
 
-- parse() method on recieving response from Top 250 URL will generate subsequent Request objects for each of the 250 movies and assign parseInDetail() as the callback method.
+- `parse()` method on recieving response from Top 250 URL will generate subsequent Request objects for each of the 250 movies and assign parseInDetail() as the callback method.
 
-- parseInDetail() is responsible for extracting relevant details associated with a movie like title, release data, popularity, rating and so on. This method also generates the follow up Request object for the movie's credits page with parseCast() as the specified callback for handling the response. 
+- `parseInDetail()` method is responsible for extracting relevant details associated with a movie like title, release data, popularity, rating and so on. This method also generates the follow up Request object for the movie's credits page with parseCast() as the specified callback for handling the response. 
 
-- parseCast() recieves Response object corresponding to the credits page for a movie along with meta data containing all the details extracted in the previous step. This callback method returns the final MovieItem object containing all the relevant fields and corresponding scraped values.
+- `parseCast()` method recieves Response object corresponding to the credits page for a movie along with meta data containing all the details extracted in the previous step. This callback method returns the final MovieItem object containing all the relevant fields and corresponding scraped values.
 
--- MovieItem objects are handled by a custom Item-Pipeline with support for publishing data to a compacted kafka topic - 'imdb-feed-compacted-v2'. process_item() converts the recieved item to a JSON payload before publishing it to the kafka topic. Here the kafka message's value is the JSON payload generated from the MovieItem object whereas the unique IMDB ID associated with the movies serves as the message's key.
+- MovieItem objects are handled by a custom Item-Pipeline with support for publishing data to a compacted kafka topic - 'imdb-feed-compacted-v2'. process_item() converts the recieved item to a JSON payload before publishing it to the kafka topic. Here the kafka message's value is the JSON payload generated from the MovieItem object whereas the unique IMDB ID associated with the movies serves as the message's key.
 
 For intiating the crawl use the following command, provided all pre-requsites are met the spider will be able to scrape data for top 250 movies in IMDB and publish it to the kafka topic provided in the settings.
 
