@@ -10,9 +10,9 @@ PersusBetaSpider is a web-crawler developed using Python's Scrapy framework. The
 - Anaconda
 - Apache Kafka
 
-<br/>
+
 ![techbox](https://user-images.githubusercontent.com/29629955/115445990-31a79f00-a234-11eb-8955-f5ab766ae910.png)
-<br/>
+
 
 # Setting up Scrapy using Anaconda
 
