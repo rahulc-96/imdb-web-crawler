@@ -94,7 +94,7 @@ Any item-pipleline in Scrapy is required to provide implementation for `process_
 
 - `parseCast()` method recieves Response object corresponding to the credits page for a movie along with meta data containing all the details extracted in the previous step. This callback method returns the final MovieItem object containing all the relevant fields and corresponding scraped values.
 
-- MovieItem objects are handled by a custom Item-Pipeline with support for publishing data to a compacted kafka topic-**imdb-feed-compacted-v2**. `process_item()` converts the recieved item to a JSON payload before publishing it to the kafka topic. Here the kafka message's value is the JSON payload generated from the MovieItem object whereas the unique IMDB ID associated with the movies serves as the message's key.
+- MovieItem objects are handled by a custom Item-Pipeline with support for publishing data to the **imdb-feed-compacted-v2** kafka topic. `process_item()` converts the recieved item to a JSON payload before publishing it to the kafka topic. Here the kafka message's value is the JSON payload generated from the MovieItem object whereas the unique IMDB ID associated with the movies serves as the message's key.
 
 Sample MovieItem kafka message:
 
