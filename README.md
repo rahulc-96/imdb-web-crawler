@@ -158,13 +158,11 @@ scrapy crawl PerseusBetaSpider-o movies.jl
 For querying or visualizing the scraped movies data , we can easily leverage the features offered by ELK stack. Logstash can be used to feed the data from imdb-feed-compacted-v2 topic to an ElasticSearch instance. Using Kibana, we can easily set up dashboards or perform text based searching on the movies data. Attatched screenshot is an example for searching for movies based on an actor's name using Kibana:
 ![Screenshot from 2021-04-19 13-24-04](https://user-images.githubusercontent.com/29629955/115443833-6403cd00-a231-11eb-8307-78e3ffa6a880.png)
 
-Further Reading:
+# Further Reading:
 
-ELK stack documentation : https://www.elastic.co/what-is/elk-stack
-<br/>
-Kafka documentation and installation guide : https://kafka.apache.org/
-<br/>
-Scrapy documentation : https://docs.scrapy.org/en/latest/index.html
+- ELK stack documentation : https://www.elastic.co/what-is/elk-stack
+- Kafka documentation and installation guide : https://kafka.apache.org/
+- Scrapy documentation : https://docs.scrapy.org/en/latest/index.html
 
  
 
