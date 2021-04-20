@@ -2,7 +2,7 @@
 
 Web crawlers are computer programs often referred to as spider-bots or crawlers that automatically scans documents on the web to generate structured data from unstructured sources. Web crawlers are most commonly used by search engines for creating indexes on other web pages, mining data for research purposes or monitoring sytems that keeps track of trends in product prices or reviews.
 
-PersusBetaSpider is a web-crawler developed using Python's Scrapy framework. The crawler scraps relevant details corresponding to the top 250 movies on IMDB, generates a JSON payload using the scraped data for each movie and publishes the data to a compacted kafka topic. The kafka topic can in turn be used as a source for dumping the data to other database systems like Postgres or ElasticSearch for querying or visualizing the collected data. 
+PersusBetaSpider is a web-crawler developed using Python's Scrapy framework. The crawler extracts relevant details corresponding to the top 250 movies on IMDB and publishes the scraped data to a compacted kafka topic. The kafka topic can in turn be used as a source for dumping the data to other database systems like Postgres or ElasticSearch for querying or visualizing the collected data. 
 
 # Pre-Requsites
 - Python
@@ -95,6 +95,52 @@ Any item-pipleline in Scrapy is required to provide implementation for `process_
 - `parseCast()` method recieves Response object corresponding to the credits page for a movie along with meta data containing all the details extracted in the previous step. This callback method returns the final MovieItem object containing all the relevant fields and corresponding scraped values.
 
 - MovieItem objects are handled by a custom Item-Pipeline with support for publishing data to a compacted kafka topic - 'imdb-feed-compacted-v2'. process_item() converts the recieved item to a JSON payload before publishing it to the kafka topic. Here the kafka message's value is the JSON payload generated from the MovieItem object whereas the unique IMDB ID associated with the movies serves as the message's key.
+
+Sample MovieItem kafka message:
+
+```json
+{
+   "director":[
+      "Christopher Nolan"
+   ],
+   "writer":[
+      "Jonathan Nolan",
+      "Christopher Nolan",
+      "Christopher Nolan",
+      "David S. Goyer",
+      "Bob Kane"
+   ],
+   "year":2008,
+   "producer":[
+      "Kevin de la Noy",
+      "Jordan Goldberg",
+      "Philip Lee",
+      "Benjamin Melniker",
+      "Christopher Nolan"
+   ],
+   "genre":"Action,Crime,Drama",
+   "@timestamp":"2021-02-28T15:46:05.589Z",
+   "title":"The Dark Knight",
+   "posterUrl":"https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@.jpg",
+   "popularity":"NA",
+   "cast":[
+      " Christian Bale",
+      " Heath Ledger",
+      " Aaron Eckhart",
+      " Michael Caine",
+      " Maggie Gyllenhaal",
+      " Gary Oldman",
+      " Morgan Freeman"
+   ],
+   "rating":9,
+   "duration":"2h 32min",
+   "key":"tt0468569",
+   "releaseDate":"18 July 2008 (USA)",
+   "cinematographer":[
+      "Wally Pfister"
+   ]
+}
+```
 
 For intiating the crawl use the following command, provided all pre-requsites are met the spider will be able to scrape data for top 250 movies in IMDB and publish it to the kafka topic provided in the settings.
 
